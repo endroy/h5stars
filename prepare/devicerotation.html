@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Phoria - Dev test page 5</title>
+		<meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">
+		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript">
+			var alphas = [0,0,0,0,0,0,0,0,0,0];
+			var side = 1;
+
+			var rotation_maxlimit = 358;
+			var rotation_minlimit = 2;
+			function smoothrotation(alp, bet) {
+				var average_rot = 0;
+				if ((alp - alphas[alphas.length-1]) > 270) {
+					alphas = [rotation_maxlimit, rotation_maxlimit, rotation_maxlimit, rotation_maxlimit, rotation_maxlimit, rotation_maxlimit, rotation_maxlimit, rotation_maxlimit, rotation_maxlimit, rotation_maxlimit];
+				}
+				if ((alp - alphas[alphas.length-1]) < -270) {
+					alphas = [rotation_minlimit, rotation_minlimit, rotation_minlimit, rotation_minlimit, rotation_minlimit, rotation_minlimit, rotation_minlimit, rotation_minlimit, rotation_minlimit, rotation_minlimit];
+				}
+				if (bet <= 85) {
+					if (side < 0) {
+						alp = alp - 180;
+					}
+					alphas.push(alp);
+					alphas.shift();
+				}
+				for (var i = 0; i < alphas.length; i++) {
+					average_rot += alphas[i];
+				};
+				return Math.round(average_rot/10);
+			}
+			jQuery(document).ready(function($) {
+				window.addEventListener("deviceorientation", function(event) {
+					$('#side').text(side);
+					$('#alpha').text(smoothrotation(event.alpha, event.beta));
+					$('#beta').text(event.beta);
+					$('#gamma').text(event.gamma);
+				}, true);
+				window.addEventListener("devicemotion", function(event) {
+					$('#x').text(event.accelerationIncludingGravity.x);
+					$('#y').text(event.accelerationIncludingGravity.y);
+					$('#z').text(event.accelerationIncludingGravity.z);
+					$('#xg').text(event.acceleration.x);
+					$('#yg').text(event.acceleration.y);
+					$('#zg').text(event.acceleration.z);
+					if (event.accelerationIncludingGravity.z > 0) {
+						side = -1;
+					} else {
+						side = 1;
+					}
+				}, true);
+			});
+		</script>
+	</head>
+	<body>
+		<p id="side"></p>
+		<p id="alpha"></p>
+		<p id="beta"></p>
+		<p id="gamma"></p>
+		<p id="x"></p>
+		<p id="y"></p>
+		<p id="z"></p>
+		<p id="xg"></p>
+		<p id="yg"></p>
+		<p id="zg"></p>
+	</body>
+</html>
