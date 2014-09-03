@@ -11,22 +11,12 @@ http://creativecommons.org/licenses/by/3.0/
 
 */
 
-function pano2vrGyro(panoObject,containerId) {
+function pano2vrGyro(panoObject) {
 
 	this.enable=function() {
 		if (isDeviceEnabled && !isEnabled) {
 			window.addEventListener("deviceorientation", handleDeviceOrientation, true);
 			
-			/* touch event handler functions.
-			container.addEventListener("touchstart", handleTouchStart, true);
-			container.addEventListener("touchend", handleTouchEnd, true);		
-			container.addEventListener("touchcancel", handleTouchEnd, true);	
-			container.addEventListener("MSPointerDown", handleTouchStart, true);
-			container.addEventListener("mousedown", handleTouchStart, true);
-			container.addEventListener("mousemove", handleTouchStart, true);
-			container.addEventListener("mouseup", handleTouchEnd, true);		
-			*/
-
 			isEnabled = true;
 		}
 		return isEnabled;
@@ -35,12 +25,6 @@ function pano2vrGyro(panoObject,containerId) {
 	this.disable=function() {
 		if (isDeviceEnabled && isEnabled) {
 			window.removeEventListener("deviceorientation", handleDeviceOrientation);
-
-			/* touch event handler functions 
-			container.removeEventListener("touchstart", handleTouchStart);
-			container.removeEventListener("touchend", handleTouchEnd);		
-			container.removeEventListener("touchcancel", handleTouchEnd);	
-			*/
 
 			isEnabled = false;
 		}
@@ -69,15 +53,6 @@ function pano2vrGyro(panoObject,containerId) {
 	}
 
 	////////////////////////////////////////////////////////////
-	/*
-	function handleTouchStart(event) {
-		isTouching = true;
-	}
-
-	function handleTouchEnd(event) {
-		isTouching = false;	
-	}
-	*/
 	var lastYaw=0;
 	var lastPitch=0;
 	var lastTouch=0;
@@ -236,8 +211,6 @@ function pano2vrGyro(panoObject,containerId) {
 	isAdaptiveDiffTilt=true;
 	isTrueNorth=false;
 	
-	// var container = document.getElementById(containerId);
-
 	diffPan = panoObj.getPan();
 	diffTilt = panoObj.getTilt();
 

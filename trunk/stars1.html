@@ -313,7 +313,8 @@
          var gy;
          $(document).ready(function() {
             po = new panoobj();
-            gy = new pano2vrGyro(po, 'monitor');
+            po.init('canvas');
+            gy = new pano2vrGyro(po);
          });
       </script>
    </head>
